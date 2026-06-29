@@ -71,9 +71,14 @@ echo ""
 echo "✅ ${APP_NAME} v${VERSION} 安装完成！"
 echo ""
 
-# 启动
-read -p "是否立即启动 ${APP_NAME}？[Y/n] " -n 1 -r
-echo
-if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+# 启动（curl | bash 时 stdin 非终端，跳过交互直接启动）
+if [ -t 0 ]; then
+  read -p "是否立即启动 ${APP_NAME}？[Y/n] " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Nn]$ ]]; then
+    open "${INSTALL_DIR}/${APP_NAME}.app"
+  fi
+else
+  echo "▶ 正在启动 ${APP_NAME}..."
   open "${INSTALL_DIR}/${APP_NAME}.app"
 fi
