@@ -2,7 +2,7 @@
 
 > AI 原生效率助理 — macOS App
 
-[![Version](https://img.shields.io/badge/version-3.10.0-blue.svg)](https://github.com/whoishzp/one/releases)
+[![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)](https://github.com/whoishzp/one-app/releases)
 [![Platform](https://img.shields.io/badge/platform-macOS%2013%2B-lightgrey.svg)](https://developer.apple.com/macos/)
 [![Swift](https://img.shields.io/badge/swift-5.9%2B-orange.svg)](https://swift.org)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)

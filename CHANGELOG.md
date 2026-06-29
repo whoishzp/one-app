@@ -3,6 +3,17 @@
 All notable changes to ONE are documented in this file.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [1.0.1] - 2026-06-29
+
+### Added
+- **cursor/ 数据跨机器同步**：通过 pre-push hook 自动将各项目 `cursor/` 目录同步到独立远端仓库，支持 GitLab 和 GitHub
+- **cursor-rules 统一管理**：重构 cursor-rules 仓库，通过 symlink 映射到 `~/.cursor/`，新增 `setup.sh` 一键安装
+
+### Changed
+- **版本号重置为 1.x**：首个公开发行版本，版本号从 1.0.1 起步
+- **BOOTSTRAP 流程增强**：新增 cursor 数据同步检查步骤（.sync-remote + pre-push hook）
+- **project_guide.mdc**：新增 cursor 数据同步初始化规则
+
 ## [3.10.0] - 2026-06-29
 
 ### Added
