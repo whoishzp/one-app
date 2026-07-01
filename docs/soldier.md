@@ -2,77 +2,76 @@
 
 ## 概述
 
-Soldier 是 ONE 应用的分层 Agent 模块，实现用户通过手机端（飞书等）控制本地电脑，完成远程在线助手功能。
+Soldier 是 ONE 应用的远程助手模块，用户通过手机端（飞书）向本地电脑的 AI Agent（Claude）发送指令，实现远程控制和智能问答。
 
-## 架构
+## 核心功能
 
-Soldier 采用六层架构设计：
+### 飞书消息接入
 
-| 层级 | 名称 | 职责 |
-|---|---|---|
-| 1 | 端接入层 | 接收飞书/钉钉等上游端消息 |
-| 2 | 消息预处理层 | 关键词聚合、延迟转发策略 |
-| 3 | 消息记录层 | 统一存储所有交互消息流水 |
-| 4 | 提示词工程层 | 组装 Soldier 级 + 全局系统提示词 |
-| 5 | Agent 调度层 | 根据配置调度 Claude / Cursor |
-| 6 | 工具层 | 全局工具配置与授权管理 |
+- 飞书 WebSocket 长连接，实时接收私聊消息
+- 纯 Swift 实现（手写 protobuf 解析），无第三方依赖
+- 自动重连（指数退避），断网恢复后自动恢复连接
+- 支持文本消息、富文本消息解析
 
-## 功能
+### 消息聚合
 
-### Soldier 配置
+- **结束词触发**：用户说「好了」「处理吧」等结束词后立即发送给 Agent
+- **超时触发**：超过设定时间（默认 60 秒）无新消息自动发送
+- **多条合并**：连续发来的多条消息自动编号合并为一条 prompt
+- 结束词本身不会发送给 Agent（消费掉）
 
-- 以流式卡片网格展示所有已配置的 Soldier
-- 每个 Soldier 独立配置：名称、头像、接入端、Agent、提示词
-- 支持新建、编辑、删除
+### Claude 集成
+
+- 通过 Claude CLI（`claude -p`）调用，支持 `--resume` 会话续接
+- 自定义系统提示词追加在 CLAUDE.md 前面
+- 可选指定 Claude 模型
+- 自动管理会话 session ID，支持重置
+
+### 飞书回复
+
+- Claude 回复自动转换为飞书消息卡片（Markdown → 卡片元素）
+- 代码块、标题、普通文本分别适配卡片格式
+- 单卡片超过 50 元素自动分批发送
+- 发送失败时自动降级为纯文本
+
+### 双输入通道
+
+- **飞书**：手机端发消息 → 飞书回复
+- **ONE 本地输入框**：在消息记录页直接输入 → 仅写入消息记录
+
+两个通道共享聚合器，体验一致。
+
+## 配置说明
 
 ### 接入端配置
 
-- 当前支持飞书（WebSocket 长连接）
-- 配置项：App ID、App Secret
-- 确认后接入端类型永久锁定
+| 配置项 | 说明 |
+| --- | --- |
+| App ID | 飞书开放平台应用 ID |
+| App Secret | 飞书开放平台应用密钥 |
+| User OpenID | 只接收指定用户的消息（留空接收全部） |
+
+飞书开放平台需启用「长连接接收事件」并订阅 `im.message.receive_v1`。
 
 ### Agent 配置
 
-- 可选 Claude 或 Cursor
-- 确认后 Agent 类型永久锁定
+| 配置项 | 说明 |
+| --- | --- |
+| 工作目录 | Claude CLI 的工作目录 |
+| Claude 模型 | 可选指定模型（留空使用默认） |
+| 聚合超时 | 10~300 秒，默认 60 秒 |
+| 结束词 | 自定义结束词列表 |
 
-### 提示词配置
+### 系统提示词
 
-- 专属系统提示词编辑器
-- 追加在 Agent 系统提示词最前面
-
-### 消息记录
-
-- 左侧 Soldier 列表 + 右侧消息流水
-- 支持用户消息、Agent 回复、系统消息三种类型
-- 仅查看，不支持从此处发送消息
-
-### 工具配置
-
-- 预留入口，后续实现
+专属提示词编辑器，内容追加在 Agent 系统提示词最前面。
 
 ## 数据存储
 
-- 配置数据：`~/.one/data/soldiers.json`
-- 消息数据：`~/.one/data/soldier-messages.json`
-- 通过 `ONEDataStore` 持久化，支持 GitHub 云同步
+| 文件 | 内容 |
+| --- | --- |
+| `~/.one/data/soldiers.json` | Soldier 配置 |
+| `~/.one/data/soldier-messages.json` | 消息记录 |
+| `~/.one/data/soldier-logs/` | 运行日志 |
 
-## 文件结构
-
-```
-Sources/Settings/Soldier/
-├── SoldierMainView.swift        # 主帧（SubTab 切换）
-├── SoldierConfigView.swift      # 配置子帧（卡片网格）
-├── SoldierEditSheet.swift       # 配置弹窗
-├── SoldierEndpointPanel.swift   # 接入端配置面板
-├── SoldierAgentPanel.swift      # Agent 配置面板
-├── SoldierPromptPanel.swift     # 提示词配置面板
-├── SoldierToolsPanel.swift      # 工具配置占位
-├── SoldierMessagesView.swift    # 消息记录主视图
-└── SoldierMessageBubble.swift   # 消息气泡组件
-
-Sources/Models/
-├── SoldierConfig.swift          # 配置数据模型
-├── SoldierStore.swift           # 数据管理 Store
-└── SoldierMessage.swift         # 消息数据模型
-```
+所有数据通过 `ONEDataStore` 持久化，支持 GitHub 云同步。
