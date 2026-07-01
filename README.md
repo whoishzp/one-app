@@ -43,12 +43,6 @@ Cursor IDE 的 AI Agent 持续交互通道。Agent 通过 MCP 发送进度和问
 
 [详细文档 →](docs/cursorgood.md)
 
-### OneMind — 知识管理
-
-个人知识管理系统。知识库 → 文件夹 → 文档三层结构，左侧目录树管理内容，右侧所见即所得编辑器支持富文本、Slash 命令、图片、文档大纲。AI 可通过 MCP 直接读写知识库。
-
-[详细文档 →](docs/onemind.md)
-
 ### Soldier — 远程助手
 
 远程本地在线助手。通过飞书等接入端接收消息，调度 Claude / Cursor Agent 执行任务。支持 Soldier 配置管理、接入端锁定、专属系统提示词。
