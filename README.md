@@ -2,7 +2,7 @@
 
 > AI 原生效率助理 — macOS App
 
-[![Version](https://img.shields.io/badge/version-1.2.8-blue.svg)](https://github.com/whoishzp/one-app/releases)
+[![Version](https://img.shields.io/badge/version-1.2.9-blue.svg)](https://github.com/whoishzp/one-app/releases)
 [![Platform](https://img.shields.io/badge/platform-macOS%2013%2B-lightgrey.svg)](https://developer.apple.com/macos/)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 
@@ -45,7 +45,7 @@ Cursor IDE 的 AI Agent 持续交互通道。Agent 通过 MCP 发送进度和问
 
 ### Soldier — 远程助手
 
-远程本地在线助手。通过飞书等接入端接收消息，调度 Claude / Cursor Agent 执行任务。支持 Soldier 配置管理、接入端锁定、专属系统提示词。
+远程本地在线助手。通过飞书等接入端接收消息，调度 Claude / Cursor Agent 执行任务。Agent 执行过程以 Cursor IDE 风格卡片实时呈现（MCP 调用、diff 差异、工具调用分组），支持 MCP/Skill 资源池、分层记忆系统。
 
 [详细文档 →](docs/soldier.md)
 
