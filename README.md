@@ -2,7 +2,7 @@
 
 > AI 原生效率助理 — macOS App
 
-[![Version](https://img.shields.io/badge/version-2.0.11-blue.svg)](https://github.com/whoishzp/one-app/releases)
+[![Version](https://img.shields.io/badge/version-2.0.13-blue.svg)](https://github.com/whoishzp/one-app/releases)
 [![Platform](https://img.shields.io/badge/platform-macOS%2013%2B-lightgrey.svg)](https://developer.apple.com/macos/)
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
 
@@ -34,6 +34,10 @@ curl -sL https://raw.githubusercontent.com/whoishzp/one-app/main/install.sh | ba
 ### 定时提醒
 
 建立规律的工作节奏。支持循环、定点、一次性三种触发方式，全屏蒙层强制打断。8 套主题风格可选，可配置倒计时锁定和跟进提醒。含下班模式（全屏黑幕 + 密码保护 + 全局快捷键）。
+
+**生命倒计时主题**：下班模式可选「生命倒计时」屏保主题，全屏黑底展示大字时钟 + 滚动生命倒计时（年/天/时/分/秒均为剩余总量，每秒实时递减），中心行清晰、远处行景深模糊，每 5 秒自动轮换。
+
+配置路径：`系统设置 → 主题设置 → 下班屏保主题` — 选择「生命倒计时」后可设置出生年份范围。点击导航栏「下班」按钮触发。
 
 [详细文档 →](docs/reminders.md)
 
