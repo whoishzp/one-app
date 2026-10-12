@@ -28,8 +28,12 @@ curl -sL https://raw.githubusercontent.com/whoishzp/one-app/main/install.sh | ba
 ### DMG 手动安装
 
 1. 前往 [Releases](https://github.com/whoishzp/one-app/releases) 下载最新 `.dmg`
-2. 打开 DMG，双击 **Install ONE.command** 完成安装
-3. 如果提示无法验证，右键点击 → 打开
+2. 双击打开 DMG
+3. 打开终端，执行：
+   ```
+   bash "/Volumes/ONE x.y.z/Install ONE.command"
+   ```
+   （把 DMG 里的 `Install ONE.command` 拖进终端可自动填入路径）
 
 ### 系统要求
 
