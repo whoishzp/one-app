@@ -90,8 +90,9 @@ VERSION=$(echo "${DOWNLOAD_URL}" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+')
 echo "  最新版本: v${VERSION}"
 
 # 下载
-echo "▶ 下载中..."
-curl -sL "${DOWNLOAD_URL}" -o "${TMP_DMG}"
+echo "▶ 下载中（${DOWNLOAD_URL##*/}）..."
+curl -L --progress-bar "${DOWNLOAD_URL}" -o "${TMP_DMG}"
+echo ""
 
 # 挂载 DMG
 echo "▶ 挂载安装包..."
