@@ -19,8 +19,11 @@ curl -sL https://raw.githubusercontent.com/whoishzp/one-app/main/install.sh | ba
 ### ZIP 安装（推荐微信 / 网盘分享）
 
 1. 前往 [Releases](https://github.com/whoishzp/one-app/releases) 下载最新 `*-install.zip`
-2. 解压后双击 **安装ONE.command**
-3. 若提示无法验证：右键 → 打开（脚本会自动清除隔离属性并安装）
+2. 解压后打开终端，执行：
+   ```
+   cd 解压后的文件夹路径 && bash 安装ONE.command
+   ```
+   （把文件夹拖进终端可自动填入路径，详见 ZIP 内「使用说明.txt」）
 
 ### DMG 手动安装
 
