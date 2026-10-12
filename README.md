@@ -16,7 +16,13 @@ ONE 是一个面向 AI 原生用户的个人效率助理，集成定时提醒、
 curl -sL https://raw.githubusercontent.com/whoishzp/one-app/main/install.sh | bash
 ```
 
-### 手动安装
+### ZIP 安装（推荐微信 / 网盘分享）
+
+1. 前往 [Releases](https://github.com/whoishzp/one-app/releases) 下载最新 `*-install.zip`
+2. 解压后双击 **安装ONE.command**
+3. 若提示无法验证：右键 → 打开（脚本会自动清除隔离属性并安装）
+
+### DMG 手动安装
 
 1. 前往 [Releases](https://github.com/whoishzp/one-app/releases) 下载最新 `.dmg`
 2. 打开 DMG，双击 **Install ONE.command** 完成安装
