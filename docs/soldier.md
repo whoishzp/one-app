@@ -13,6 +13,12 @@ Soldier 是 ONE 应用的远程助手模块，用户通过手机端（飞书）�
 - 自动重连（指数退避），断网恢复后自动恢复连接
 - 支持文本消息、富文本消息解析
 
+### 消息与稳定性
+
+- 月度聊天记录在后台异步加载，超大文件自动隔离，避免打开 Soldier 时界面卡死
+- Agent 忙碌时新消息排队（不重复刷写入），跑完后继续处理
+- GitHub 云同步**不再上传** Soldier 聊天 JSON，仅同步配置（聊天记录仅本机）
+
 ### 消息聚合
 
 - **结束词触发**：用户说「好了」「处理吧」等结束词后立即发送给 Agent
@@ -88,7 +94,13 @@ Soldier 是 ONE 应用的远程助手模块，用户通过手机端（飞书）�
 | 文件 | 内容 |
 | --- | --- |
 | `~/.one/data/soldiers.json` | Soldier 配置 |
-| `~/.one/data/soldier-messages.json` | 消息记录 |
+| `~/.one/data/soldiers/{名称}/messages-YYYY-MM.json` | 按月消息记录 |
 | `~/.one/data/soldier-logs/` | 运行日志 |
 
-所有数据通过 `ONEDataStore` 持久化，支持 GitHub 云同步。
+配置（`soldiers.json`）通过 `ONEDataStore` 持久化并可 GitHub 云同步；消息记录与运行日志仅本地保存，不同步。
+
+### 消息安全说明
+
+- Agent 忙碌时新消息会先记入历史，等当前任务结束后再按序处理，不会丢失。
+- 单月消息文件过大（超过约 50MB）时会自动隔离，避免打开 Soldier 卡死。
+- 工具调用详情与 diff 内容会截断保存，防止消息文件无限膨胀。
